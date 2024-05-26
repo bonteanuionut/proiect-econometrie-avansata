@@ -1,7 +1,11 @@
+python=3.9
+numpy
 pandas
+openpyxl
 matplotlib
 seaborn
 scipy
 scikit-learn
 keras
 tensorflow
+pytorch
