@@ -6,6 +6,7 @@ matplotlib
 seaborn
 scipy
 scikit-learn
+statsmodels
 keras
 tensorflow
 pytorch
