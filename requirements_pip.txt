@@ -4,6 +4,7 @@ pandas
 openpyxl
 matplotlib
 seaborn
+plotly
 scipy
 scikit-learn
 statsmodels
