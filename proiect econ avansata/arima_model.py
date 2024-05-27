@@ -13,6 +13,8 @@ def split_data(dataframe: pd.DataFrame):
     DOCSTRING
 
     This function splits the data into training data and test data.
+
+    Returns tuple of DataFrames.
     '''
     nrows = int(round(len(dataframe) * 0.75, 0))
     dataframe_train = dataframe.sort_index().iloc[:nrows, :]
