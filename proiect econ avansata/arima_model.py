@@ -1,5 +1,5 @@
 import pandas as pd
-import seaborn as sns
+from math import sqrt
 import matplotlib.pyplot as plt
 from statsmodels.graphics.tsaplots import plot_pacf
 from statsmodels.graphics.tsaplots import plot_acf
@@ -15,6 +15,8 @@ def split_data(dataframe: pd.DataFrame):
 
     This function splits the data into training data and test data.
 
+    dataframe -> the dataset you're using
+
     Returns tuple of DataFrames.
     '''
     nrows = int(round(len(dataframe) * 0.75, 0))
@@ -28,6 +30,9 @@ def plot_pacf_acf(dataframe: pd.DataFrame, y: str):
     DOCSTRING
 
     This function plots the ACF(Autocorrelation Function) and PACF(Partial Autocorrelation Function)
+
+    dataframe -> the dataset you're using
+    y -> the dependent variable
     """
 
     plot_pacf(dataframe[y])
@@ -38,6 +43,9 @@ def adfuller_and_diff(dataframe: pd.DataFrame, y: str):
     DOCSTRING
 
     This function checks for stationarity and if not, it will differentiate our Y until it's stationary.
+
+    dataframe -> the dataset you're using
+    y -> the dependent variable
     """
     result = adfuller(dataframe[y])
     i = 1
@@ -63,6 +71,14 @@ def train_predict_plot(df: pd.DataFrame, train_df: pd.DataFrame, test_df: pd.Dat
     DOCSTRING
 
     This function computes the predictions and will plot the actual values, the train values and the test values (out-of sample).
+    df -> the dataset you're using
+    train_df -> the train dataset
+    test_df -> the test dataaset
+    y -> the dependent variable
+    order -> a parameter that's passed to ARIMA model (p, d, q)
+
+    This function will also print the RMSE.
+
     """
     model = ARIMA(train_df[y], order = order)
     model_fit = model.fit()
@@ -84,3 +100,7 @@ def train_predict_plot(df: pd.DataFrame, train_df: pd.DataFrame, test_df: pd.Dat
     plt.plot(df.index, df[label+'_test'], label='Test', alpha=0.3)
     plt.legend()
     plt.show()
+    rmse_train = sqrt(mean_squared_error(df.iloc[:len(train_df)][y], df.iloc[:len(train_df)][label+'_train']))
+    rmse_test = sqrt(mean_squared_error(df.iloc[len(train_df):][y], df.iloc[len(train_df):][label+'_test']))
+    print(f'Root mean squared error (RMSE) training: {rmse_train}')
+    print(f'Root mean squared error (RMSE) training: {rmse_test}')
