@@ -84,4 +84,3 @@ def train_predict_plot(df: pd.DataFrame, train_df: pd.DataFrame, test_df: pd.Dat
     plt.plot(df.index, df[label+'_test'], label='Test', alpha=0.3)
     plt.legend()
     plt.show()
-    print(f'Root mean squared error (RMSE) training: {mean_squared_error(df.iloc[:len(train_df)][y], df[label+'_train'])}')
